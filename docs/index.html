@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Guessing Game</title>
+    <title>Word Safari</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,7 +51,7 @@
     </style>
 </head>
 <body>
-    <h1>Word Guessing Game</h1>
+    <h1>Word Safari</h1>
     <div id="game-board"></div>
     <div id="guess-history"></div>
     <div id="guess-panel">
@@ -62,15 +62,46 @@
     <script>
         const maxGuesses = 5;
         let currentGuess = 0;
-        const answer = "APPLE";  // You can set this answer to whatever word you like
-
+        let answer = "";
+        let allowedWords = [];
+        let possibleAnswers = [];
+    
         const gameBoard = document.getElementById("game-board");
         const guessHistory = document.getElementById("guess-history");
         const guessField = document.getElementById("guess-field");
         const submitGuessButton = document.getElementById("submit-guess-button");
         const clearButton = document.getElementById("clear-button");
+    
+        // Load word lists
+        async function loadWordLists() {
+            try {
+                // Fetch allowed words
+                const allowedResponse = await fetch('./resources/allowed.txt');
+                const allowedText = await allowedResponse.text();
+                allowedWords = allowedText.split('\n').map(word => word.trim().toUpperCase());
+                console.log("Allowed Words:", allowedWords);
+        
+                // Fetch possible answers
+                const answerResponse = await fetch('./resources/wordlist.txt');
+                const answerText = await answerResponse.text();
+                possibleAnswers = answerText.split('\n').map(word => word.trim().toUpperCase());
+                console.log("Possible Answers:", possibleAnswers);
+        
+                // Pick a random answer
+                answer = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)];
+                console.log("Selected Answer:", answer);
+                submitGuessButton.disabled = false;  // Enable once loaded
+              
+            } catch (error) {
+                console.error("Error loading word lists:", error);
+            }
+        }
 
-        // Create letter buttons for the game board
+    
+        // Initialize the game
+        loadWordLists();
+    
+        // Create letter buttons for the game board in QWERTY format
         const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         alphabet.split("").forEach(letter => {
             const button = document.createElement("button");
@@ -83,7 +114,7 @@
             };
             gameBoard.appendChild(button);
         });
-
+    
         // Add empty guess slots to the guess history
         for (let i = 0; i < maxGuesses; i++) {
             const guessRow = document.createElement("div");
@@ -96,7 +127,7 @@
             }
             guessHistory.appendChild(guessRow);
         }
-
+    
         // Handle the guess submission
         submitGuessButton.addEventListener("click", submitGuess);
         guessField.addEventListener("keydown", (e) => {
@@ -104,14 +135,19 @@
                 submitGuess();
             }
         });
-
+    
         clearButton.addEventListener("click", () => {
             guessField.value = "";
         });
-
+    
         function submitGuess() {
             const guess = guessField.value.trim().toUpperCase();
             if (guess.length === 5) {
+                if (!allowedWords.includes(guess) && !possibleAnswers.includes(guess)) {
+                    alert("This is not a valid word.");
+                    return;
+                }
+    
                 // Update the guess history row
                 const guessRow = guessHistory.children[currentGuess];
                 for (let i = 0; i < 5; i++) {
@@ -119,10 +155,13 @@
                     letterSlot.textContent = guess[i];
                     if (guess[i] === answer[i]) {
                         letterSlot.style.backgroundColor = "green";
+                        updateLetterBoard(guess[i], "green");
                     } else if (answer.includes(guess[i])) {
                         letterSlot.style.backgroundColor = "yellow";
+                        updateLetterBoard(guess[i], "yellow");
                     } else {
                         letterSlot.style.backgroundColor = "red";
+                        updateLetterBoard(guess[i], "red");
                     }
                 }
                 currentGuess++;
@@ -142,7 +181,20 @@
                 alert("Please enter a 5-letter word.");
             }
         }
-
+    
+        function updateLetterBoard(letter, color) {
+            const buttons = document.getElementsByClassName("letter-button");
+            for (let button of buttons) {
+                if (button.textContent === letter) {
+                    if (color === "red") {
+                        button.style.backgroundColor = color;
+                    } else if (color === "green" || (button.style.backgroundColor !== "green" && button.style.backgroundColor !== "red")) {
+                        button.style.backgroundColor = color;
+                    }
+                }
+            }
+        }
+    
         function resetGame() {
             currentGuess = 0;
             guessHistory.innerHTML = "";
@@ -158,7 +210,15 @@
                 guessHistory.appendChild(guessRow);
             }
             guessField.value = "";
+            const buttons = document.getElementsByClassName("letter-button");
+            for (let button of buttons) {
+                button.style.backgroundColor = "lightgray";
+            }
+    
+            // Pick a new answer for the next game
+            answer = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)];
         }
     </script>
+    
 </body>
 </html>
