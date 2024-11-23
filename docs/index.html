@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(10, 40px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #guess-history {
+            margin-top: 20px;
+        }
+        .letter-button {
+            width: 40px;
+            height: 40px;
+            background-color: lightgray;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .letter-slot {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border: 2px solid black;
+            margin: 5px;
+            line-height: 40px;
+            font-size: 20px;
+        }
+        #guess-panel {
+            margin-top: 20px;
+        }
+        #submit-guess-button, #clear-button {
+            margin: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word Guessing Game</h1>
+    <div id="game-board"></div>
+    <div id="guess-history"></div>
+    <div id="guess-panel">
+        <input type="text" id="guess-field" maxlength="5" placeholder="Enter guess" />
+        <button id="submit-guess-button">Submit Guess</button>
+        <button id="clear-button">Clear</button>
+    </div>
+    <script>
+        const maxGuesses = 5;
+        let currentGuess = 0;
+        const answer = "APPLE";  // You can set this answer to whatever word you like
+
+        const gameBoard = document.getElementById("game-board");
+        const guessHistory = document.getElementById("guess-history");
+        const guessField = document.getElementById("guess-field");
+        const submitGuessButton = document.getElementById("submit-guess-button");
+        const clearButton = document.getElementById("clear-button");
+
+        // Create letter buttons for the game board
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        alphabet.split("").forEach(letter => {
+            const button = document.createElement("button");
+            button.classList.add("letter-button");
+            button.textContent = letter;
+            button.onclick = () => {
+                if (guessField.value.length < 5) {
+                    guessField.value += letter;
+                }
+            };
+            gameBoard.appendChild(button);
+        });
+
+        // Add empty guess slots to the guess history
+        for (let i = 0; i < maxGuesses; i++) {
+            const guessRow = document.createElement("div");
+            guessRow.classList.add("guess-row");
+            for (let j = 0; j < 5; j++) {
+                const letterSlot = document.createElement("span");
+                letterSlot.classList.add("letter-slot");
+                letterSlot.textContent = " ";
+                guessRow.appendChild(letterSlot);
+            }
+            guessHistory.appendChild(guessRow);
+        }
+
+        // Handle the guess submission
+        submitGuessButton.addEventListener("click", submitGuess);
+        guessField.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                submitGuess();
+            }
+        });
+
+        clearButton.addEventListener("click", () => {
+            guessField.value = "";
+        });
+
+        function submitGuess() {
+            const guess = guessField.value.trim().toUpperCase();
+            if (guess.length === 5) {
+                // Update the guess history row
+                const guessRow = guessHistory.children[currentGuess];
+                for (let i = 0; i < 5; i++) {
+                    const letterSlot = guessRow.children[i];
+                    letterSlot.textContent = guess[i];
+                    if (guess[i] === answer[i]) {
+                        letterSlot.style.backgroundColor = "green";
+                    } else if (answer.includes(guess[i])) {
+                        letterSlot.style.backgroundColor = "yellow";
+                    } else {
+                        letterSlot.style.backgroundColor = "red";
+                    }
+                }
+                currentGuess++;
+                guessField.value = "";
+                if (guess === answer) {
+                    setTimeout(() => {
+                        alert("Congrats! You guessed " + answer + "!");
+                        resetGame();
+                    }, 100);
+                } else if (currentGuess >= maxGuesses) {
+                    setTimeout(() => {
+                        alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
+                        resetGame();
+                    }, 100);
+                }
+            } else {
+                alert("Please enter a 5-letter word.");
+            }
+        }
+
+        function resetGame() {
+            currentGuess = 0;
+            guessHistory.innerHTML = "";
+            for (let i = 0; i < maxGuesses; i++) {
+                const guessRow = document.createElement("div");
+                guessRow.classList.add("guess-row");
+                for (let j = 0; j < 5; j++) {
+                    const letterSlot = document.createElement("span");
+                    letterSlot.classList.add("letter-slot");
+                    letterSlot.textContent = " ";
+                    guessRow.appendChild(letterSlot);
+                }
+                guessHistory.appendChild(guessRow);
+            }
+            guessField.value = "";
+        }
+    </script>
+</body>
+</html>
