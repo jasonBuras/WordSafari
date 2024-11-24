@@ -20,9 +20,15 @@
                 gap: 10px;
                 margin-top: 20px;
                 padding: 0 20px;
-                overflow-x: auto;
+                overflow: hidden; /* Prevent scrollbars */
                 width: 100%;
                 box-sizing: border-box;
+            }
+
+            .row {
+                display: flex;
+                justify-content: center;
+                gap: 5px; /* Add spacing between buttons */
             }
             #guess-history {
                 margin-top: 20px;
@@ -30,19 +36,23 @@
             }
             .letter-button {
                 flex: 1;
-                width: 45px;
-                height: 50px;
+                width: 70px;
+                height: 70px;
                 background-color: #8F8B66;
                 border: 2px solid #5E5C43;
-                border-radius: 5px;
+                border-radius: 10px;
                 cursor: pointer;
-                font-size: 1.5rem;
+                font-size: 2rem;
                 color: #fff;
                 transition: background-color 0.3s, transform 0.3s;
+                transform-origin: center; /* Keep scaling consistent */
+                position: relative; /* Isolate hover effect */
             }
+
             .letter-button:hover {
                 background-color: #5E5C43;
                 transform: scale(1.1);
+                z-index: 1; /* Ensure hover effect doesn't impact layout */
             }
             .letter-slot {
                 display: inline-block;
@@ -59,20 +69,20 @@
             #guess-panel {
                 padding: 0 20px;
             }
-            #submit-guess-button, #clear-button, #delete-button {
-                margin: 5px;
-                padding: 15px;
+            #submit-guess-button, #clear-button, #delete-button, #hint-button {
+                margin: 10px;
+                padding: 20px;
                 cursor: pointer;
-                font-size: 1rem;
+                font-size: 1.5rem;
                 background-color: #5E7557;
                 color: #fff;
                 border: none;
-                border-radius: 5px;
+                border-radius: 10px;
                 transition: background-color 0.3s, transform 0.3s;
             }
-            #submit-guess-button:hover, #clear-button:hover, #delete-button:hover {
+            #submit-guess-button:hover, #clear-button:hover, #delete-button:hover, #hint-button:hover {
                 background-color: #4A5E3A;
-                transform: scale(1.05);
+                transform: scale(1.1);
             }
             #guess-field {
                 width: 80%;
@@ -115,6 +125,7 @@
         <button id="submit-guess-button">Submit Guess</button>
         <button id="delete-button">Delete</button>
         <button id="clear-button">Clear</button>
+        
     </div>
     <div id="game-board"></div>
     <button id="toggle-layout-button">Toggle Keyboard Layout</button>
@@ -133,6 +144,7 @@
         const clearButton = document.getElementById("clear-button");
         const toggleLayoutButton = document.getElementById("toggle-layout-button");
         const deleteButton = document.getElementById("delete-button");
+        //const hintButton = document.getElementById("hint-button");
         let previousButtonStates = {};
     
         // Load word lists
@@ -159,6 +171,14 @@
                 console.error("Error loading word lists:", error);
             }
         }
+
+        const soundEffects = {
+            pop: new Audio('./resources/soundeffects/pop.wav'),
+            hint: new Audio('./resources/soundeffects/hint.wav'),
+            win: new Audio('./resources/soundeffects/win.wav'),
+            lose: new Audio('./resources/soundeffects/lose.wav'),
+            submit: new Audio('./resources/soundeffects/submit.wav')
+        };
     
         // Initialize the game
         loadWordLists();
@@ -236,6 +256,7 @@
             button.onclick = () => {
                 if (guessField.value.length < 5) {
                     guessField.value += letter;
+                    playSound('pop');
                 }
             };
             return button;
@@ -264,17 +285,31 @@
     
         clearButton.addEventListener("click", () => {
             guessField.value = "";
+            playSound('pop');
         });
         
         deleteButton.addEventListener("click", () => {
             guessField.value = guessField.value.slice(0, -1);
+            playSound('pop');
         });
+        
+        /*hintButton.addEventListener("click", () => {
+            if (answer && guessField.value.length < 5) {
+                for (let i = 0; i < answer.length; i++) {
+                    if (!guessField.value.includes(answer[i])) {
+                        guessField.value += answer[i];
+                        break;
+                    }
+                }
+            }
+        });*/
     
         function submitGuess() {
             const guess = guessField.value.trim().toUpperCase();
             if (guess.length === 5) {
                 if (!allowedWords.includes(guess) && !possibleAnswers.includes(guess)) {
                     alert("This is not a valid word.");
+                    playSound('hint');
                     return;
                 }
     
@@ -295,20 +330,31 @@
                     }
                 }
                 currentGuess++;
+                playSound('submit');
                 guessField.value = "";
                 if (guess === answer) {
                     setTimeout(() => {
                         alert("Congrats! You guessed " + answer + "!");
+                        playSound('win');
                         resetGame();
                     }, 100);
                 } else if (currentGuess >= maxGuesses) {
                     setTimeout(() => {
                         alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
+                        playSound('lose');
                         resetGame();
                     }, 100);
                 }
             } else {
                 alert("Please enter a 5-letter word.");
+                playSound('hint');
+            }
+        }
+
+        function playSound(effect) {
+            if (soundEffects[effect]) {
+                soundEffects[effect].currentTime = 0; // Reset sound to start
+                soundEffects[effect].play();
             }
         }
     
@@ -328,6 +374,8 @@
         function resetGame() {
             currentGuess = 0;
             guessHistory.innerHTML = "";
+            
+            // Reset guess history rows
             for (let i = 0; i < maxGuesses; i++) {
                 const guessRow = document.createElement("div");
                 guessRow.classList.add("guess-row");
@@ -339,15 +387,20 @@
                 }
                 guessHistory.appendChild(guessRow);
             }
+
             guessField.value = "";
+
+            // Restore button colors from previous state
             const buttons = document.getElementsByClassName("letter-button");
             for (let button of buttons) {
-                button.style.backgroundColor = "lightgray";
+                const letter = button.textContent;
+                button.style.backgroundColor = "#8F8B66";
             }
-    
+
             // Pick a new answer for the next game
             answer = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)];
         }
+
     </script>
     
 </body>
