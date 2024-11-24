@@ -1,76 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Safari</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        #game-board {
-            display: grid;
-            grid-template-columns: repeat(10, 40px);
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        #guess-history {
-            margin-top: 20px;
-        }
-        .letter-button {
-            width: 40px;
-            height: 40px;
-            background-color: lightgray;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-        }
-        .letter-slot {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border: 2px solid black;
-            margin: 5px;
-            line-height: 40px;
-            font-size: 20px;
-        }
-        #guess-panel {
-            margin-top: 20px;
-        }
-        #submit-guess-button, #clear-button {
-            margin: 10px;
-            padding: 10px;
-            cursor: pointer;
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Word Safari</title>
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                background-color: #B2AC88;
+                color: #3C3B32;
+            }
+            #game-board {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin-top: 20px;
+                padding: 0 20px;
+            }
+            #guess-history {
+                margin-top: 20px;
+                padding: 0 20px;
+            }
+            .letter-button {
+                width: 50px;
+                height: 50px;
+                background-color: #8F8B66;
+                border: 2px solid #5E5C43;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 1.5rem;
+                color: #fff;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+            .letter-button:hover {
+                background-color: #5E5C43;
+                transform: scale(1.1);
+            }
+            .letter-slot {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                background-color: #D8D2A6;
+                border: 2px solid #3C3B32;
+                margin: 5px;
+                line-height: 50px;
+                font-size: 1.5rem;
+                color: #4A4A33;
+                border-radius: 5px;
+            }
+            #guess-panel {
+                padding: 0 20px;
+            }
+            #submit-guess-button, #clear-button, #delete-button {
+                margin: 5px;
+                padding: 15px;
+                cursor: pointer;
+                font-size: 1rem;
+                background-color: #5E7557;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+            #submit-guess-button:hover, #clear-button:hover, #delete-button:hover {
+                background-color: #4A5E3A;
+                transform: scale(1.05);
+            }
+            #guess-field {
+                width: 80%;
+                max-width: 300px;
+                font-size: 1.5rem;
+                padding: 10px;
+                border: 2px solid #4A4A33;
+                border-radius: 5px;
+                background-color: #F5F4ED;
+            }
+            #toggle-layout-button {
+                margin-top: 5px;
+                padding: 10px;
+                font-size: 1rem;
+                background-color: #8F8B66;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+            #toggle-layout-button:hover {
+                background-color: #7B8B63;
+                transform: scale(1.05);
+            }
+            h1 {
+                font-size: 3rem;
+                margin-top: 20px;
+                color: #5E7557;
+            }
+        </style>
+    </head>
 <body>
     <h1>Word Safari</h1>
-    <div id="game-board"></div>
     <div id="guess-history"></div>
+    
+    
+    <input type="text" id="guess-field" maxlength="5" placeholder="Enter guess" />
     <div id="guess-panel">
-        <input type="text" id="guess-field" maxlength="5" placeholder="Enter guess" />
         <button id="submit-guess-button">Submit Guess</button>
+        <button id="delete-button">Delete</button>
         <button id="clear-button">Clear</button>
     </div>
+    <div id="game-board"></div>
+    <button id="toggle-layout-button">Toggle Keyboard Layout</button>
     <script>
         const maxGuesses = 5;
         let currentGuess = 0;
         let answer = "";
         let allowedWords = [];
         let possibleAnswers = [];
+        let isQwertyLayout = true;
     
         const gameBoard = document.getElementById("game-board");
         const guessHistory = document.getElementById("guess-history");
         const guessField = document.getElementById("guess-field");
         const submitGuessButton = document.getElementById("submit-guess-button");
         const clearButton = document.getElementById("clear-button");
+        const toggleLayoutButton = document.getElementById("toggle-layout-button");
+        const deleteButton = document.getElementById("delete-button");
+        let previousButtonStates = {};
     
         // Load word lists
         async function loadWordLists() {
@@ -96,14 +155,71 @@
                 console.error("Error loading word lists:", error);
             }
         }
-
     
         // Initialize the game
         loadWordLists();
+        createQwertyKeyboard();
     
-        // Create letter buttons for the game board in QWERTY format
-        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        alphabet.split("").forEach(letter => {
+        // Toggle between QWERTY and A-Z keyboard layouts
+        toggleLayoutButton.addEventListener("click", () => {
+            // Save the current button states
+            const buttons = document.getElementsByClassName("letter-button");
+            for (let button of buttons) {
+                previousButtonStates[button.textContent] = button.style.backgroundColor;
+            }
+            isQwertyLayout = !isQwertyLayout;
+            gameBoard.innerHTML = "";
+            if (isQwertyLayout) {
+                createQwertyKeyboard();
+            } else {
+                createAZKeyboard();
+            }
+            // Restore the button states
+            const newButtons = document.getElementsByClassName("letter-button");
+            for (let button of newButtons) {
+                if (previousButtonStates[button.textContent]) {
+                    button.style.backgroundColor = previousButtonStates[button.textContent];
+                }
+            }
+        });
+    
+        function createQwertyKeyboard() {
+            const qwertyRows = [
+                "QWERTYUIOP",
+                "ASDFGHJKL",
+                "ZXCVBNM"
+            ];
+            qwertyRows.forEach(row => {
+                const rowDiv = document.createElement("div");
+                rowDiv.style.display = "flex";
+                row.split("").forEach(letter => {
+                    const button = createLetterButton(letter);
+                    rowDiv.appendChild(button);
+                });
+                gameBoard.appendChild(rowDiv);
+            });
+        }
+    
+        function createAZKeyboard() {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const row1 = document.createElement("div");
+            row1.style.display = "flex";
+            const row2 = document.createElement("div");
+            row2.style.display = "flex";
+    
+            alphabet.split("").forEach((letter, index) => {
+                const button = createLetterButton(letter);
+                if (index < 13) {
+                    row1.appendChild(button);
+                } else {
+                    row2.appendChild(button);
+                }
+            });
+            gameBoard.appendChild(row1);
+            gameBoard.appendChild(row2);
+        }
+    
+        function createLetterButton(letter) {
             const button = document.createElement("button");
             button.classList.add("letter-button");
             button.textContent = letter;
@@ -112,8 +228,8 @@
                     guessField.value += letter;
                 }
             };
-            gameBoard.appendChild(button);
-        });
+            return button;
+        }
     
         // Add empty guess slots to the guess history
         for (let i = 0; i < maxGuesses; i++) {
@@ -138,6 +254,10 @@
     
         clearButton.addEventListener("click", () => {
             guessField.value = "";
+        });
+        
+        deleteButton.addEventListener("click", () => {
+            guessField.value = guessField.value.slice(0, -1);
         });
     
         function submitGuess() {
