@@ -3,14 +3,18 @@ Word Safari is a fun and interactive word-guessing game designed for educational
 
 It is intended to be used on desktop, but can work on mobile with varying results. Its initial use-case was to be used on a Smart Board.
 
-- [Features](#features-memo) 
-- [How to Play](#how-to-play-video_game)
-- [Getting Started](#getting-started-rocket)
-- [Educational Purpose](#educational-purpose-books)
-- [Technologies Used](#technologies-used-test_tube)
-- [Future Plans](#future-plans-hourglass)
-- [Disclaimer](#disclaimer-heavy_exclamation_mark)
-- [License](#license-scroll)
+- [Features :memo:](#features-memo) 
+- [How to Play :video_game:](#how-to-play-video_game)
+- [Getting Started :rocket:](#getting-started-rocket)
+    - [Option 1: Play via Web :globe_with_meridians:](#option-1-playing-via-the-web-globe_with_meridians)
+    - [Option 2: Clone the repo :house:](#option-2-clone-the-repo-and-play-locally-house)
+    - [Option 3: Download raw files :file_folder:](#option-3-download-the-raw-files-file_folder)
+    - [Modding the game :cookie:](#langniappe-mod-the-game-cookie)
+- [Educational Purpose :books:](#educational-purpose-books)
+- [Technologies Used :test_tube:](#technologies-used-test_tube)
+- [Future Plans :hourglass:](#future-plans-hourglass)
+- [Disclaimer :heavy_exclamation_mark:](#disclaimer-heavy_exclamation_mark)
+- [License :scroll:](#license-scroll)
 
 # **Features** :memo:
 - Educational Focus: The game uses a curated list of common words suitable for young learners.
