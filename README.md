@@ -36,7 +36,7 @@ It is intended to be used on desktop, but can work on mobile with varying result
 - Simply go to the [GitHub page](https://jasonburas.github.io/WordSafari/) for Word Safari.
 
 ### *Option 2 (Clone the repo and play locally)* :house:
-> For a full tutorial on cloning repos, please visit the [official GitHub "Cloning a repository" guide.(https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+> For a full tutorial on cloning repos, please visit the *official* [ GitHub "Cloning a repository"](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)  guide.
 - *Clone the Repository*
     > Navigate to the directory you'd like to clone the repo to and paste:
     >    ```bash
