@@ -20,13 +20,17 @@
                 gap: 10px;
                 margin-top: 20px;
                 padding: 0 20px;
+                overflow-x: auto;
+                width: 100%;
+                box-sizing: border-box;
             }
             #guess-history {
                 margin-top: 20px;
                 padding: 0 20px;
             }
             .letter-button {
-                width: 50px;
+                flex: 1;
+                width: 45px;
                 height: 50px;
                 background-color: #8F8B66;
                 border: 2px solid #5E5C43;
@@ -192,6 +196,8 @@
             qwertyRows.forEach(row => {
                 const rowDiv = document.createElement("div");
                 rowDiv.style.display = "flex";
+                rowDiv.style.flexWrap = "wrap";
+                rowDiv.style.justifyContent = "center";
                 row.split("").forEach(letter => {
                     const button = createLetterButton(letter);
                     rowDiv.appendChild(button);
@@ -204,8 +210,12 @@
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const row1 = document.createElement("div");
             row1.style.display = "flex";
+            row1.style.flexWrap = "wrap";
+            row1.style.justifyContent = "center";
             const row2 = document.createElement("div");
             row2.style.display = "flex";
+            row2.style.flexWrap = "wrap";
+            row2.style.justifyContent = "center";
     
             alphabet.split("").forEach((letter, index) => {
                 const button = createLetterButton(letter);
