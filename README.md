@@ -1,6 +1,14 @@
 # Word Safari :tiger:
 Word Safari is a fun and interactive word-guessing game designed for educational purposes! It challenges players to guess a hidden five-letter word in five attempts, providing feedback on each guess to help players refine their word-solving skills.
 
+- [Features](#features)
+- [How to Play](#how-to-play)
+- [Getting Started](#getting-started)
+- [Educational Purpose](#educational-purpose)
+- [Technologies Used](#technologies-used)
+- [Future Plans](#future-plans)
+- [License](#license)
+
 # Features :memo:
 - Educational Focus: The game uses a curated list of common words suitable for young learners.
 - Interactive Keyboard: Includes an on-screen keyboard with QWERTY and A-Z layout options for accessibility.
@@ -32,14 +40,7 @@ Word Safari is a fun and interactive word-guessing game designed for educational
 - Open `./docs/index.html` using a web browser (Firefox, Chrome, Edge, etc.)
     - This will open the webpage locally (no internet connection required)
 
-### Langniappe (Mod the game) :cookie:
-- If cloned, you have the ability to start messing around with the word lists.
-    - Navigate to `./resources/wordlist.txt`
-        - Add/remove possible answers :book:
-    - `./resources/soundeffects/`
-        - Change sound effects :musical_note:
-
-## Option 3 (Download the raw files)
+## Option 3 (Download the raw files) :file_folder:
 - If you don't feel like creating a GitHub account and setting up GitBash, simply [Download the repo as a zip file](https://github.com/jasonBuras/WordSafari/archive/refs/heads/main.zip)
     - You can click the hyperlink provided or: 
         1. Go to https://github.com/jasonBuras/WordSafari
@@ -49,6 +50,14 @@ Word Safari is a fun and interactive word-guessing game designed for educational
     - Open `./docs/index.html` using a web browser (Firefox, Chrome, Edge, etc.)
         - This will open the webpage locally (no internet connection required)
 
+## Langniappe (Mod the game) :cookie:
+> If you mess around with the source code, please feel free to share what you've come up with. See [Future Plans](#future-plans)
+- If you have the raw files, you have the ability to start messing around with the word lists.
+    - Navigate to `./resources/wordlist.txt`
+        - Add/remove possible answers :book:
+    - `./resources/soundeffects/`
+        - Change sound effects :musical_note:
+    
 # Educational Purpose :books:
 - Word Safari is designed with the following educational goals in mind:
     - Vocabulary Building: Introduces children to new words in a fun, interactive way.
@@ -56,7 +65,21 @@ Word Safari is a fun and interactive word-guessing game designed for educational
     - Keyboard Familiarity: Helps players familiarize themselves with the QWERTY and alphabetical layouts.
     - Confidence in Language Skills: Positive reinforcement through engaging audio and visual feedback.
 
-# Disclaimer 
+# Technologies Used :test_tube:
+- HTML: For structuring the game and creating the user interface.
+- CSS: For styling the game.
+- JavaScript: For game logic, interactivity, and handling user inputs.
+
+# Future Plans :hourglass:
+- Dynamic word lengths
+    - Current format is 1 guess/letter, so there would be dynamic guess counts
+- Allow users to import their own .txt files for a list of possible answers.
+    - This is already technically implemented, but requires you to clone/download the repo in order to edit the files.
+    - This may require hosting a server/database and having an account system to store the wordlists per user.
+    - This would work with Dynamic Word lengths to allow instructors to curate wordlists relevant to their current lesson plans.
+
+
+# Disclaimer :heavy_exclamation_mark:
 > [!IMPORTANT]
 > Word Safari is an original creation for educational purposes. While inspired by games like Wordle, all code, word lists, and design elements are unique to this project. This game is not affiliated with, endorsed by, or sponsored by Wordle or its creators.
 
