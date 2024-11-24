@@ -63,7 +63,8 @@ It is intended to be used on desktop, but can work on mobile with varying result
     - Navigate to `./resources/wordlist.txt`
         - Add/remove possible answers :book:
             > Note: `removeDuplicates.py` is a tool intended to be run if words are added to `wordlist.txt`. This will remove words from `allowed.txt`. This isn't *exactly* necessary, but it improves performance by removing unecessary words from this list.
-            > 
+            > If you wind up getting confused and/or the script (only limited testing) messes your lists up, you can always come back to the repo and grab the original list(s). 
+            >
             > You will need Python installed in order to run it.
             > ```bash
             > py removeDuplicates.py
@@ -92,6 +93,8 @@ It is intended to be used on desktop, but can work on mobile with varying result
     - This would work with Dynamic Word lengths to allow instructors to curate wordlists relevant to their current lesson plans.
 - Make the game more mobile friendly
     - It *technically* works on mobile currently, but isn't exactly a great experience.
+- Create GUIs for users to easily add words without having to worry about running the removeDuplications script.
+    - This can also work with the importing .txt files functionality mentioned in the second bullet point.
 
 # **Disclaimer** :heavy_exclamation_mark:
 > [!IMPORTANT]
