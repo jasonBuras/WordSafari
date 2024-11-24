@@ -308,8 +308,8 @@
             const guess = guessField.value.trim().toUpperCase();
             if (guess.length === 5) {
                 if (!allowedWords.includes(guess) && !possibleAnswers.includes(guess)) {
-                    alert("This is not a valid word.");
                     playSound('hint');
+                    alert("This is not a valid word.");
                     return;
                 }
     
@@ -334,14 +334,14 @@
                 guessField.value = "";
                 if (guess === answer) {
                     setTimeout(() => {
-                        alert("Congrats! You guessed " + answer + "!");
                         playSound('win');
+                        alert("Congrats! You guessed " + answer + "!");
                         resetGame();
                     }, 100);
                 } else if (currentGuess >= maxGuesses) {
                     setTimeout(() => {
-                        alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
                         playSound('lose');
+                        alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
                         resetGame();
                     }, 100);
                 }
