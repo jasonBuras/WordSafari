@@ -26,7 +26,6 @@ eagle
 earth
 empty
 flame
-flower
 frost
 fruit
 funny
