@@ -17,7 +17,7 @@ It is intended to be used on desktop, but can work on mobile with varying result
 - [License :scroll:](#license-scroll)
 
 # **Features** :memo:
-- Educational Focus: The game uses a curated list of common words suitable for young learners.
+- Educational Focus: The game uses a [curated list](https://github.com/jasonBuras/WordSafari/blob/main/docs/resources/wordlist.txt) of common words suitable for young learners.
 - Interactive Keyboard: Includes an on-screen keyboard with QWERTY and A-Z layout options for accessibility.
 - Color-Coded Feedback: Helps players learn letter positions and refine their guesses.
 - Sound Effects: Fun audio cues to make gameplay more engaging.
@@ -58,7 +58,7 @@ It is intended to be used on desktop, but can work on mobile with varying result
         - This will open the webpage locally (no internet connection required)
 
 ### *Langniappe (Mod the game)* :cookie:
-> If you mess around with the source code, please feel free to share what you've come up with. See [Future Plans](#future-plans)
+> If you mess around with the source code, please feel free to share what you've come up with. See [Future Plans](#future-plans-hourglass)
 - If you have the raw files, you have the ability to start messing around with the word lists.
     - Navigate to `./resources/wordlist.txt`
         - Add/remove possible answers :book:
