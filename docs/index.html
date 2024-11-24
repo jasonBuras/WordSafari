@@ -109,6 +109,7 @@
                 transform: scale(1.05);
             }
             h1 {
+                font-family: Garamond, serif;
                 font-size: 3rem;
                 margin-top: 20px;
                 color: #5E7557;
@@ -118,8 +119,6 @@
 <body>
     <h1>Word Safari</h1>
     <div id="guess-history"></div>
-    
-    
     <input type="text" id="guess-field" maxlength="5" placeholder="Enter guess" />
     <div id="guess-panel">
         <button id="submit-guess-button">Submit Guess</button>
@@ -136,6 +135,7 @@
         let allowedWords = [];
         let possibleAnswers = [];
         let isQwertyLayout = true;
+        let winStreak = 0;
     
         const gameBoard = document.getElementById("game-board");
         const guessHistory = document.getElementById("guess-history");
@@ -154,17 +154,17 @@
                 const allowedResponse = await fetch('./resources/allowed.txt');
                 const allowedText = await allowedResponse.text();
                 allowedWords = allowedText.split('\n').map(word => word.trim().toUpperCase());
-                console.log("Allowed Words:", allowedWords);
+                console.log("Allowed Words: ", allowedWords);
         
                 // Fetch possible answers
                 const answerResponse = await fetch('./resources/wordlist.txt');
                 const answerText = await answerResponse.text();
                 possibleAnswers = answerText.split('\n').map(word => word.trim().toUpperCase());
-                console.log("Possible Answers:", possibleAnswers);
+                console.log("Possible Answers: ", possibleAnswers);
         
                 // Pick a random answer
                 answer = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)];
-                console.log("Selected Answer:", answer);
+                console.log("Selected Answer: ", answer);
                 submitGuessButton.disabled = false;  // Enable once loaded
               
             } catch (error) {
@@ -229,24 +229,34 @@
         function createAZKeyboard() {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const row1 = document.createElement("div");
+            const row2 = document.createElement("div");
+            const row3 = document.createElement("div");
+            
             row1.style.display = "flex";
             row1.style.flexWrap = "wrap";
             row1.style.justifyContent = "center";
-            const row2 = document.createElement("div");
+
             row2.style.display = "flex";
             row2.style.flexWrap = "wrap";
             row2.style.justifyContent = "center";
+
+            row3.style.display = "flex";
+            row3.style.flexWrap = "wrap";
+            row3.style.justifyContent = "center";
     
             alphabet.split("").forEach((letter, index) => {
                 const button = createLetterButton(letter);
-                if (index < 13) {
+                if (index < 9) {
                     row1.appendChild(button);
-                } else {
+                } else if (index < 18) {
                     row2.appendChild(button);
+                } else {
+                    row3.appendChild(button);
                 }
             });
             gameBoard.appendChild(row1);
             gameBoard.appendChild(row2);
+            gameBoard.appendChild(row3);
         }
     
         function createLetterButton(letter) {
@@ -333,12 +343,17 @@
                 playSound('submit');
                 guessField.value = "";
                 if (guess === answer) {
+                    winStreak++;
+                    if(winStreak >= 3){
+                        alert(`You're on a #{winStreak} word streak!`);
+                    }
                     setTimeout(() => {
                         playSound('win');
                         alert("Congrats! You guessed " + answer + "!");
                         resetGame();
                     }, 100);
                 } else if (currentGuess >= maxGuesses) {
+                    winStreak = 0;
                     setTimeout(() => {
                         playSound('lose');
                         alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
@@ -372,6 +387,7 @@
         }
     
         function resetGame() {
+            winStreak = 0;
             currentGuess = 0;
             guessHistory.innerHTML = "";
             
