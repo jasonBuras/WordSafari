@@ -62,6 +62,12 @@ It is intended to be used on desktop, but can work on mobile with varying result
 - If you have the raw files, you have the ability to start messing around with the word lists.
     - Navigate to `./resources/wordlist.txt`
         - Add/remove possible answers :book:
+            > Note: `removeDuplicates.py` is a tool intended to be run if words are added to `wordlist.txt`. This will remove words from `allowed.txt`. This isn't *exactly* necessary, but it improves performance by removing unecessary words from this list.
+            > 
+            > You will need Python installed in order to run it.
+            > ```bash
+            > py removeDuplicates.py
+            > ```
     - `./resources/soundeffects/`
         - Change sound effects :musical_note:
     
