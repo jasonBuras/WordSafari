@@ -69,14 +69,15 @@ It is intended to be used on desktop, but can work on mobile with varying result
             - To **add** words, open the terminal in the directory with the word lists and `AddWords.py`
                 > [!NOTE]
                 > [Python](https://www.python.org/downloads/) is required.
-                > You can also do this manually.
                 
                 > ```bash
                 > py AddWords.py
                 > ```
+
             - A GUI should appear allowing you to add 5-letter words
-                > [!IMPORTANT]
-                > A word will only be accepted if it doesn't already exist in `wordlist.txt`. If it exists in `allowed.txt`, then it will be removed and added to `wordlist.txt`
+            
+            > [!IMPORTANT]
+            > A word will only be accepted if it doesn't already exist in `wordlist.txt`. If it exists in `allowed.txt`, then it will be removed and added to `wordlist.txt`
    
    - #### **Changing Sound Effects** :musical_note::
         - `./resources/soundeffects/`
