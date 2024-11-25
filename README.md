@@ -54,23 +54,32 @@ It is intended to be used on desktop, but can work on mobile with varying result
         2. Click `<> Code v`
         3. Click "Download ZIP"
         4. Extract at your desired location.
+
+        ![Source: helpdeskgeek.com](https://helpdeskgeek.com/wp-content/pictures/2021/06/11CodeButtonDownloadZip.png)
+
     - Open `./docs/index.html` using a web browser (Firefox, Chrome, Edge, etc.)
         - This will open the webpage locally (no internet connection required)
 
 ### *Langniappe (Mod the game)* :cookie:
 > If you mess around with the source code, please feel free to share what you've come up with. See [Future Plans](#future-plans-hourglass)
-- If you have the raw files, you have the ability to start messing around with the word lists.
-    - Navigate to `./resources/wordlist.txt`
-        - Add/remove possible answers :book:
-            > Note: `removeDuplicates.py` is a tool intended to be run if words are added to `wordlist.txt`. This will remove words from `allowed.txt`. This isn't *exactly* necessary, but it improves performance by removing unecessary words from this list.
-            > If you wind up getting confused and/or the script (only limited testing) messes your lists up, you can always come back to the repo and grab the original list(s). 
-            >
-            > You will need Python installed in order to run it.
-            > ```bash
-            > py removeDuplicates.py
-            > ```
-    - `./resources/soundeffects/`
-        - Change sound effects :musical_note:
+- If you have the raw files, you have the ability to start messing around with some of the game play features.
+    - #### **Modifying the Answer List**:
+        - Navigate to `./resources/`
+            - Here you will see `wordlist.txt`, `allowed.txt`, and `AddWords.py`
+            - To **add** words, open the terminal in the directory with the word lists and `AddWords.py`
+                > [!NOTE]
+                > [Python](https://www.python.org/downloads/) is required.
+                > You can also do this manually.
+                >
+                > ```bash
+                > py AddWords.py
+                > ```
+            - A GUI should appear allowing you to add 5-letter words
+                > [!IMPORTANT]
+                > A word will only be accepted if it doesn't already exist in `wordlist.txt`. If it exists in `allowed.txt`, then it will be removed and added to `wordlist.txt`
+    - #### **Changing Sound Effects** :musical_note::
+        - `./resources/soundeffects/`
+            - Replace the sounds using the same file names (unless you go into the source code and modify it yourself) 
     
 # **Educational Purpose** :books:
 - Word Safari is designed with the following educational goals in mind:
@@ -83,6 +92,8 @@ It is intended to be used on desktop, but can work on mobile with varying result
 - HTML: For structuring the game and creating the user interface.
 - CSS: For styling the game.
 - JavaScript: For game logic, interactivity, and handling user inputs.
+- Python: For creating the `AddWords` GUI tool.
+    - The GUI was built using Tkinter.
 
 # **Future Plans** :hourglass:
 - Dynamic word lengths
