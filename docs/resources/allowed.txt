@@ -91,7 +91,6 @@ acros
 acted
 actin
 acton
-actor
 acute
 acyls
 adage
@@ -126,7 +125,6 @@ adrad
 adred
 adsum
 aduki
-adult
 adunc
 adust
 advew
@@ -577,7 +575,6 @@ ascus
 asdic
 ashed
 ashen
-ashes
 ashet
 aside
 asked
@@ -747,7 +744,6 @@ baccy
 bacha
 bachs
 backs
-bacon
 baddy
 badge
 badly
@@ -809,7 +805,6 @@ banes
 bangs
 bania
 banjo
-banks
 banns
 bants
 bantu
@@ -910,8 +905,6 @@ beans
 beany
 beard
 beare
-bears
-beast
 beath
 beats
 beaty
@@ -961,7 +954,6 @@ belee
 belga
 belie
 belle
-bells
 belly
 belon
 below
@@ -1885,7 +1877,6 @@ chaya
 chays
 cheap
 cheat
-check
 cheek
 cheep
 cheer
@@ -2385,9 +2376,7 @@ crews
 crias
 cribs
 crick
-cried
 crier
-cries
 crime
 crimp
 crims
@@ -4022,7 +4011,6 @@ friar
 fribs
 fried
 frier
-fries
 frigs
 frill
 frise
@@ -4205,7 +4193,6 @@ gasts
 gatch
 gated
 gater
-gates
 gaths
 gator
 gauch
@@ -4818,7 +4805,6 @@ hamza
 hanap
 hance
 hanch
-hands
 handy
 hangi
 hangs
@@ -4998,7 +4984,6 @@ hikoi
 hilar
 hilch
 hillo
-hills
 hilly
 hilts
 hilum
@@ -6742,7 +6727,6 @@ mazey
 mazut
 mbira
 meads
-meals
 mealy
 meane
 means
@@ -7260,7 +7244,6 @@ nahal
 naiad
 naifs
 naiks
-nails
 naira
 nairu
 naive
@@ -8256,7 +8239,6 @@ plats
 platt
 platy
 playa
-plays
 plaza
 plead
 pleas
@@ -9183,9 +9165,7 @@ robes
 robin
 roble
 rocks
-rocky
 roded
-rodeo
 rodes
 roger
 rogue
@@ -9653,7 +9633,6 @@ seans
 seare
 sears
 sease
-seats
 seaze
 sebum
 secco
@@ -10203,13 +10182,11 @@ smith
 smits
 smock
 smogs
-smoke
 smoko
 smoky
 smolt
 smoor
 smoot
-smore
 smorg
 smote
 smout
@@ -10219,7 +10196,6 @@ smurs
 smush
 smuts
 snabs
-snack
 snafu
 snags
 snail
@@ -10316,7 +10292,6 @@ sokes
 sokol
 solah
 solan
-solar
 solas
 solde
 soldi
@@ -10888,7 +10863,6 @@ swoon
 swoop
 swops
 swopt
-sword
 swore
 sworn
 swots
@@ -12251,10 +12225,8 @@ washy
 wasms
 wasps
 waspy
-waste
 wasts
 watap
-watch
 watts
 wauff
 waugh
@@ -12262,7 +12234,6 @@ wauks
 waulk
 wauls
 waurs
-waved
 waver
 waves
 wavey
@@ -12348,7 +12319,6 @@ whaur
 wheal
 whear
 wheat
-wheel
 wheen
 wheep
 wheft
@@ -12447,7 +12417,6 @@ winos
 winze
 wiped
 wiper
-wipes
 wired
 wirer
 wires
@@ -12843,7 +12812,6 @@ zonal
 zonda
 zoned
 zoner
-zones
 zonks
 zooea
 zooey
