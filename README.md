@@ -12,7 +12,7 @@ It is intended to be used on desktop, but can work on mobile with varying result
     - [Modding the game :cookie:](#langniappe-mod-the-game-cookie)
 - [Educational Purpose :books:](#educational-purpose-books)
 - [Technologies Used :test_tube:](#technologies-used-test_tube)
-- [Future Plans :hourglass:](#future-plans-hourglass)
+- [Future Plans :hourglass:](#future-plans-hourglass) 
 - [Disclaimer :heavy_exclamation_mark:](#disclaimer-heavy_exclamation_mark)
 - [License :scroll:](#license-scroll)
 

@@ -33,6 +33,17 @@
             #guess-history {
                 margin-top: 20px;
                 padding: 0 20px;
+                height: calc(5 * 70px + 40px); /* Ensure consistent height for the guess history container */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+            }
+            .guess-row {
+                display: flex;
+                justify-content: center;
+                gap: 5px; /* Add spacing between slots */
+                height: 70px; /* Set a consistent height to prevent jump */
             }
             .letter-button {
                 flex: 1;
@@ -54,6 +65,11 @@
                 transform: scale(1.1);
                 z-index: 1; /* Ensure hover effect doesn't impact layout */
             }
+            @keyframes flip {
+                0% { transform: rotateX(0); }
+                50% { transform: rotateX(90deg); background-color: #D8D2A6; }
+                100% { transform: rotateX(0); }
+            }
             .letter-slot {
                 display: inline-block;
                 width: 50px;
@@ -65,7 +81,15 @@
                 font-size: 1.5rem;
                 color: #4A4A33;
                 border-radius: 5px;
+                transform-origin: center;
+                transform-style: preserve-3d; /* Preserve the 3D effect during animation */
+                backface-visibility: hidden; /* Prevent backface visibility during the flip */
+                transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
             }
+            .letter-slot.animate {
+                animation: flip 0.5s ease-in-out forwards; /* "forwards" fixed the obnoxious bug where the entire panel was dropping down for the animation */
+            }
+
             #guess-panel {
                 padding: 0 10px;
             }
@@ -115,6 +139,7 @@
                 margin-bottom: 0;
                 color: #5E7557;
             }
+            
         </style>
     </head>
 <body>
@@ -181,7 +206,10 @@
             hint: new Audio('./resources/soundeffects/hint.wav'),
             win: new Audio('./resources/soundeffects/win.wav'),
             lose: new Audio('./resources/soundeffects/lose.wav'),
-            submit: new Audio('./resources/soundeffects/submit.wav')
+            submit: new Audio('./resources/soundeffects/submit.wav'),
+            correct: new Audio('./resources/soundeffects/correct.wav'),
+            correctish: new Audio('./resources/soundeffects/correctish.wav'),
+            incorrect: new Audio('./resources/soundeffects/incorrect.wav')
         };
     
         // Initialize the game
@@ -331,41 +359,63 @@
                 const guessRow = guessHistory.children[currentGuess];
                 for (let i = 0; i < 5; i++) {
                     const letterSlot = guessRow.children[i];
-                    letterSlot.textContent = guess[i];
-                    if (guess[i] === answer[i]) {
-                        letterSlot.style.backgroundColor = "green";
-                        updateLetterBoard(guess[i], "green");
-                    } else if (answer.includes(guess[i])) {
-                        letterSlot.style.backgroundColor = "yellow";
-                        updateLetterBoard(guess[i], "yellow");
-                    } else {
-                        letterSlot.style.backgroundColor = "red";
-                        updateLetterBoard(guess[i], "red");
-                    }
+                    // Set a delay for each letter to reveal in sequence
+                    setTimeout(() => {
+                        letterSlot.textContent = guess[i];
+                        letterSlot.classList.add("animate");
+                        setTimeout(() => {
+                            letterSlot.classList.remove("animate");
+                        }, 500);
+                        
+                        if (guess[i] === answer[i]) {
+                            letterSlot.style.backgroundColor = "green";
+                            updateLetterBoard(guess[i], "green");
+                            playSound('correct');
+                        } else if (answer.includes(guess[i])) {
+                            letterSlot.style.backgroundColor = "yellow";
+                            updateLetterBoard(guess[i], "yellow");
+                            playSound('correctish');
+                        } else {
+                            letterSlot.style.backgroundColor = "red";
+                            updateLetterBoard(guess[i], "red");
+                            playSound('incorrect');
+                        }
+                    }, i * 300); // Delay of 300ms between each letter reveal
                 }
+
                 currentGuess++;
                 playSound('submit');
                 guessField.value = "";
-                if (guess === answer) {
-                    winStreak++;
-                    // Update the win streak display regardless of the count
-                    if(winStreak >=3){
-                        document.getElementById('winstreak-display').innerHTML = `🔥 You're on a ${winStreak} word streak! 🔥`; // I can't believe this works
-                    }
+
+
+                        // Check if the player has won or lost after all animations have played
+                setTimeout(() => {
+                    if (guess === answer) {
+                        winStreak++;
+                        // Update the win streak display regardless of the count
+                        if (winStreak >= 3) {
+                            document.getElementById('winstreak-display').innerHTML = `🔥 You're on a ${winStreak} word streak! 🔥`;
+                        }
+                        confetti({
+                            particleCount: 100,      // Number of confetti particles
+                            spread: 70,              // Spread of the confetti
+                            origin: { y: 0.6 }       // Position where the confetti starts
+                        });
                         setTimeout(() => {
-                        playSound('win');
-                        alert("Congrats! You guessed " + answer + "!");
-                        resetGame();
-                    }, 100);
-                } else if (currentGuess >= maxGuesses) {
-                    winStreak = 0;
-                    setTimeout(() => {
-                        playSound('lose');
-                        alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
-                        document.getElementById('winstreak-display').innerHTML = "";
-                        resetGame();
-                    }, 100);
-                }
+                            playSound('win');
+                            alert("Congrats! You guessed " + answer + "!");
+                            resetGame();
+                        }, 100); // Slight delay before showing the alert
+                    } else if (currentGuess >= maxGuesses) {
+                        winStreak = 0;
+                        setTimeout(() => {
+                            playSound('lose');
+                            alert("Game Over! The correct word was: " + answer + ". Better luck next time!");
+                            document.getElementById('winstreak-display').innerHTML = "";
+                            resetGame();
+                        }, 100); // Slight delay before showing the alert
+                    }
+                }, 1700); // Total delay to ensure all animations finish (4 letters * 300ms + 500ms for last animation)
             } else {
                 alert("Please enter a 5-letter word.");
                 playSound('hint');
@@ -422,6 +472,13 @@
         }
 
     </script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <footer style="margin-top: 30px; padding: 20px; background-color: #8F8B66; color: #fff;">
+        <p>Want to learn more about this project? Check out the project on <a href="https://github.com/jasonBuras/WordSafari" target="_blank" style="color: #fff; text-decoration: underline;">GitHub</a>.</p>
+        <p><a href="https://github.com/jasonBuras/WordSafari/blob/main/docs/resources/wordlist.txt" target="_blank" style="color: #fff; text-decoration: underline;">The word list</a> can be found on the GitHub repo as well.</p>
+        <p>Thank you for playing!</p>
+    </footer>
+
 </body>
 </html>
