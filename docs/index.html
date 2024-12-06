@@ -33,7 +33,7 @@
             #guess-history {
                 margin-top: 20px;
                 padding: 0 20px;
-                height: calc(5 * 70px + 40px); /* Ensure consistent height for the guess history container */
+                height: calc(var(--max-guesses, maxGuesses) * 70px + 40px); /* Dynamically adjust height based on guess count */
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -117,7 +117,7 @@
                 border-radius: 5px;
                 background-color: #F5F4ED;
             }
-            #toggle-layout-button {
+            #toggle-layout-button, #change-guesses-button {
                 margin-top: 5px;
                 padding: 10px;
                 font-size: 1rem;
@@ -128,7 +128,7 @@
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.3s;
             }
-            #toggle-layout-button:hover {
+            #toggle-layout-button:hover, #change-guesses-button:hover {
                 background-color: #7B8B63;
                 transform: scale(1.05);
             }
@@ -157,8 +157,10 @@
     </div>
     <div id="game-board"></div>
     <button id="toggle-layout-button">Toggle Keyboard Layout</button>
+    <button id="change-guesses-button">Change Max Guesses</button>
     <script>
-        const maxGuesses = 5;
+        let maxGuesses = 6;
+
         let currentGuess = 0;
         let winStreak = 0;
         let answer = "";
@@ -173,6 +175,7 @@
         const clearButton = document.getElementById("clear-button");
         const toggleLayoutButton = document.getElementById("toggle-layout-button");
         const deleteButton = document.getElementById("delete-button");
+        const changeGuessesButton = document.getElementById("change-guesses-button");
         //const hintButton = document.getElementById("hint-button");
         let previousButtonStates = {};
     
@@ -239,6 +242,18 @@
             }
         });
     
+        // Change max guesses dynamically
+        changeGuessesButton.addEventListener("click", () => {
+            const newMaxGuesses = parseInt(prompt("Enter new maximum number of guesses:"));
+            if (!isNaN(newMaxGuesses) && newMaxGuesses > 0) {
+                document.documentElement.style.setProperty('--max-guesses', newMaxGuesses);
+                maxGuesses = newMaxGuesses;
+                resetGame();
+            } else {
+                alert("Please enter a valid number greater than 0.");
+            }
+        });
+
         function createQwertyKeyboard() {
             const qwertyRows = [
                 "QWERTYUIOP",
