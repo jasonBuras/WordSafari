@@ -80,6 +80,7 @@ It is intended to be used on desktop, but can work on mobile with varying result
    - #### **Changing Sound Effects** :musical_note::
         - `./resources/soundeffects/`
             - Replace the sounds using the same file names (unless you go into the source code and modify it yourself) 
+            - I used https://freesound.org for the current sound effects.
     
 # **Educational Purpose** :books:
 - Word Safari is designed with the following educational goals in mind:
