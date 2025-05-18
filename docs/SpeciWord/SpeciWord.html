@@ -28,7 +28,9 @@
             .row {
                 display: flex;
                 justify-content: center;
+                flex-wrap: nowrap;
                 gap: 5px; /* Add spacing between buttons */
+                padding: 0 5vw;
             }
             #guess-history {
                 margin-top: 20px;
@@ -46,14 +48,16 @@
                 height: 70px; /* Set a consistent height to prevent jump */
             }
             .letter-button {
-                flex: 1;
-                width: 70px;
-                height: 70px;
+                flex: 1 1 auto;
+                min-width: 8vw;
+                max-width: 70px;
+                height: 12vw;
+                max-height: 70px;
                 background-color: #7FAF7A;
                 border: 2px solid #4C6B3C;
                 border-radius: 10px;
                 cursor: pointer;
-                font-size: 2rem;
+                font-size: 4vw;
                 color: #fff;
                 transition: background-color 0.3s, transform 0.3s;
                 transform-origin: center; /* Keep scaling consistent */
@@ -259,54 +263,40 @@
 
         function createQwertyKeyboard() {
             const qwertyRows = [
-                "QWERTYUIOP",
-                "ASDFGHJKL",
-                "ZXCVBNM"
-            ];
-            qwertyRows.forEach(row => {
+                ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                ["Z", "X", "C", "V", "B", "N", "M"]
+            ];//Specified the rows each letter should be on. hopefully this fixes its appearance on mobile
+            qwertyRows.forEach(rowLetters => {
                 const rowDiv = document.createElement("div");
-                rowDiv.style.display = "flex";
-                rowDiv.style.flexWrap = "wrap";
+                rowDiv.classList.add("row");
+                rowDiv.style.flexWrap = "nowrap";
                 rowDiv.style.justifyContent = "center";
-                row.split("").forEach(letter => {
-                    const button = createLetterButton(letter);
-                    rowDiv.appendChild(button);
+                rowDiv.style.width = "100%";
+                rowLetters.forEach(letter => {
+                    rowDiv.appendChild(createLetterButton(letter));
                 });
                 gameBoard.appendChild(rowDiv);
             });
         }
     
         function createAZKeyboard() {
-            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const row1 = document.createElement("div");
-            const row2 = document.createElement("div");
-            const row3 = document.createElement("div");
-            
-            row1.style.display = "flex";
-            row1.style.flexWrap = "wrap";
-            row1.style.justifyContent = "center";
-
-            row2.style.display = "flex";
-            row2.style.flexWrap = "wrap";
-            row2.style.justifyContent = "center";
-
-            row3.style.display = "flex";
-            row3.style.flexWrap = "wrap";
-            row3.style.justifyContent = "center";
-    
-            alphabet.split("").forEach((letter, index) => {
-                const button = createLetterButton(letter);
-                if (index < 9) {
-                    row1.appendChild(button);
-                } else if (index < 18) {
-                    row2.appendChild(button);
-                } else {
-                    row3.appendChild(button);
-                }
+            const abcdefRows = [
+                ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+                ["K", "L", "M", "N", "O", "P", "Q", "R", "S"],
+                ["T", "U", "V", "W", "X", "Y", "Z"]
+            ];//Specified the rows each letter should be on. hopefully this fixes its appearance on mobile
+            abcdefRows.forEach(rowLetters => {
+                const rowDiv = document.createElement("div");
+                rowDiv.classList.add("row");
+                rowDiv.style.flexWrap = "nowrap";
+                rowDiv.style.justifyContent = "center";
+                rowDiv.style.width = "100%";
+                rowLetters.forEach(letter => {
+                    rowDiv.appendChild(createLetterButton(letter));
+                });
+                gameBoard.appendChild(rowDiv);
             });
-            gameBoard.appendChild(row1);
-            gameBoard.appendChild(row2);
-            gameBoard.appendChild(row3);
         }
     
         function createLetterButton(letter) {
@@ -471,7 +461,7 @@
             // Restore button colors to default state
             const buttons = document.getElementsByClassName("letter-button");
             for (let button of buttons) {
-                button.style.backgroundColor = "#8F8B66";
+                button.style.backgroundColor = "#7FAF7A";
             }
 
             // Pick a new answer for the next game
