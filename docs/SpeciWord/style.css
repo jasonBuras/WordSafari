@@ -1,0 +1,35 @@
+/* SpeciWord Style */
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  background-color: #B2C8A2;
+  color: #5DAE4F;
+}
+
+.letter-button {
+  background-color: #7FAF7A;
+  border: 2px solid #4C6B3C;
+  color: #fff;
+}
+
+.letter-button:hover {
+  background-color: #5E8B4C;
+}
+
+.letter-slot {
+  background-color: #F0EEDC;
+}
+
+.letter-slot.correct { background-color: #4CAF50; }
+.letter-slot.correctish { background-color: #FFEB3B; }
+.letter-slot.incorrect { background-color: #F44336; }
+
+#submit-guess-button, #clear-button, #delete-button {
+  background-color: #5DAE4F;
+  color: #fff;
+}
+
+#submit-guess-button:hover, #clear-button:hover, #delete-button:hover {
+  background-color: #4A9A3F;
+}

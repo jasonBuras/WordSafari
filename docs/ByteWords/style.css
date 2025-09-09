@@ -1,0 +1,31 @@
+/* ByteWords Style */
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  background-color: #000;
+  color: #00FF00;
+}
+
+.letter-button {
+  background-color: #003300;
+  border: 2px solid #00FF00;
+  color: #00FF00;
+}
+
+.letter-button:hover {
+  background-color: #008800;
+}
+
+.letter-slot.correct { background-color: #4CAF50; }
+.letter-slot.correctish { background-color: #FFEB3B; }
+.letter-slot.incorrect { background-color: #F44336; }
+
+#submit-guess-button, #clear-button, #delete-button {
+  background-color: #003300;
+  color: #00FF00;
+}
+
+#submit-guess-button:hover, #clear-button:hover, #delete-button:hover {
+  background-color: #008800;
+}
