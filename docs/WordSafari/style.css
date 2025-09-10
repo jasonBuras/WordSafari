@@ -1,0 +1,82 @@
+/* WordSafari Style */
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  background-color: #B2AC88;
+  color: #4a5e3a;
+}
+
+h1, h2 {
+  color: #4a5e3a;
+  text-shadow: 0 0 5px rgba(74, 94, 58, 0.3);
+}
+
+.letter-button {
+    background-color: #8F8B66;
+    border: 2px solid #5E5C43;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.letter-button:hover {
+    background-color: #5E5C43;
+}
+.letter-slot {
+  background-color: #D8D2A6;
+  border: 2px solid #3C3B32;
+  color: #4A4A33;
+}
+
+#submit-guess-button,
+#clear-button,
+#delete-button,
+#hint-button,
+#toggle-layout-button,
+#change-guesses-button {
+  margin: 5px;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  background-color: #5E7557;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+#submit-guess-button:hover,
+#clear-button:hover,
+#delete-button:hover,
+#hint-button:hover,
+#toggle-layout-button:hover,
+#change-guesses-button:hover {
+  background-color: #4A5E3A;
+  transform: scale(1.05);
+}
+
+#guess-field {
+  width: 80%;
+  max-width: 300px;
+  font-size: 1.5rem;
+  padding: 10px;
+  border: 2px solid #4A4A33;
+  border-radius: 5px;
+  background-color: #F5F4ED;
+  color: #333;
+}
+
+footer {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #8F8B66;
+  color: #fff;
+}
+
+footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+footer a:hover {
+  color: #D8D2A6;
+}
