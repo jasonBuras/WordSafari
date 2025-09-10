@@ -6,73 +6,77 @@ body {
   background-color: #B2AC88;
   color: #4a5e3a;
 }
+
+h1, h2 {
+  color: #4a5e3a;
+  text-shadow: 0 0 5px rgba(74, 94, 58, 0.3);
+}
+
 .letter-button {
-    flex: 1 1 auto;
-    min-width: 8vw;
-    max-width: 70px;
-    height: 12vw;
-    max-height: 70px;
     background-color: #8F8B66;
     border: 2px solid #5E5C43;
     border-radius: 10px;
-    cursor: pointer;
-    font-size: 4vw;
     color: #fff;
-    transition: background-color 0.3s, transform 0.3s;
-    transform-origin: center; /* Keep scaling consistent */
-    position: relative; /* Isolate hover effect */
 }
 
 .letter-button:hover {
     background-color: #5E5C43;
-    transform: scale(1.1);
-    z-index: 1; /* Ensure hover effect doesn't impact layout */
 }
 .letter-slot {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    background-color: #D8D2A6;
-    border: 2px solid #3C3B32;
-    color: #4A4A33;
+  background-color: #D8D2A6;
+  border: 2px solid #3C3B32;
+  color: #4A4A33;
 }
 
-#submit-guess-button, #clear-button, #delete-button, #hint-button {
-    margin: 5px;
-    padding: 20px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    background-color: #5E7557;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    transition: background-color 0.3s, transform 0.3s;
+#submit-guess-button,
+#clear-button,
+#delete-button,
+#hint-button,
+#toggle-layout-button,
+#change-guesses-button {
+  margin: 5px;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  background-color: #5E7557;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.3s;
 }
-#submit-guess-button:hover, #clear-button:hover, #delete-button:hover, #hint-button:hover {
-    background-color: #4A5E3A;
-    transform: scale(1.1);
+
+#submit-guess-button:hover,
+#clear-button:hover,
+#delete-button:hover,
+#hint-button:hover,
+#toggle-layout-button:hover,
+#change-guesses-button:hover {
+  background-color: #4A5E3A;
+  transform: scale(1.05);
 }
+
 #guess-field {
-    width: 80%;
-    max-width: 300px;
-    font-size: 1.5rem;
-    padding: 10px;
-    border: 2px solid #4A4A33;
-    border-radius: 5px;
-    background-color: #F5F4ED;
+  width: 80%;
+  max-width: 300px;
+  font-size: 1.5rem;
+  padding: 10px;
+  border: 2px solid #4A4A33;
+  border-radius: 5px;
+  background-color: #F5F4ED;
+  color: #333;
 }
-#toggle-layout-button, #change-guesses-button {
-    margin-top: 5px;
-    padding: 10px;
-    font-size: 1rem;
-    background-color: #8F8B66;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+
+footer {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #8F8B66;
+  color: #fff;
 }
-#toggle-layout-button:hover, #change-guesses-button:hover {
-    background-color: #7B8B63;
-    transform: scale(1.05);
+
+footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+footer a:hover {
+  color: #D8D2A6;
 }

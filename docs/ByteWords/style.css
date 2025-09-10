@@ -7,6 +7,11 @@ body {
   color: #00FF00;
 }
 
+h1, h2 {
+  color: #00FF00;
+  text-shadow: 0 0 10px #00FF00; /* glowing text */
+}
+
 .letter-button {
   background-color: #003300;
   border: 2px solid #00FF00;
@@ -17,15 +22,42 @@ body {
   background-color: #008800;
 }
 
+.letter-slot{
+  background-color: #2C2C2C;
+  border: 2px solid #3C3B32;
+  color: #4A4A33;
+}
+
 .letter-slot.correct { background-color: #4CAF50; }
 .letter-slot.correctish { background-color: #FFEB3B; }
 .letter-slot.incorrect { background-color: #F44336; }
 
-#submit-guess-button, #clear-button, #delete-button {
+#submit-guess-button,
+#clear-button,
+#delete-button,
+#hint-button,
+#toggle-layout-button,
+#change-guesses-button {
   background-color: #003300;
   color: #00FF00;
 }
 
-#submit-guess-button:hover, #clear-button:hover, #delete-button:hover {
+#submit-guess-button:hover,
+#clear-button:hover,
+#delete-button:hover,
+#hint-button:hover,
+#toggle-layout-button:hover,
+#change-guesses-button:hover {
   background-color: #008800;
+}
+
+footer {
+  background-color: #003300;
+  color: #00FF00;
+}
+footer a {
+  color: #00FF00;
+}
+footer a:hover {
+  color: #00FFAA;
 }
