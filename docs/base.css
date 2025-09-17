@@ -26,7 +26,7 @@ body {
     flex-wrap: nowrap;
     width: 100%;
     gap: 4px;
-    padding: 0 4vw;
+    padding: 0 2vw;
     box-sizing: border-box;
 }
 
@@ -80,14 +80,15 @@ body {
     subtract total gaps (9 gaps of 4px in a 10-key row)
     subtract padding (4vw left + right)
     divide by 10 (max row length)
+    flex: 1 1 calc((100% - (9*4px) - 8vw) / 10);
   */
-  flex: 1 1 calc((100% - (9*4px) - 8vw) / 10);
+  flex: 1 1 0;
   max-width: 90px;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
   cursor: pointer;
 
-  font-size: clamp(1rem, 3vw, 38px);
+  font-size: clamp(1rem, 4vw, 38px);
 
   display: flex;
   align-items: center;
@@ -96,6 +97,10 @@ body {
   transition: background-color 0.3s, transform 0.3s;
   transform-origin: center;
   position: relative;
+
+  /*for mobile*/
+  touch-action: manipulation;
+  user-select: none;
 }
 
 /* hover scaling */
@@ -134,6 +139,10 @@ body {
   border-radius: 8px;
 
   transition: background-color 0.3s, transform 0.3s;
+
+  /*for mobile*/
+  touch-action: manipulation;
+  user-select: none;
 }
 
 #submit-guess-button:hover,
