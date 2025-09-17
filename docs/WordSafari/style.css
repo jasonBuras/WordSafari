@@ -34,15 +34,8 @@ h1, h2 {
 #hint-button,
 #toggle-layout-button,
 #change-guesses-button {
-  margin: 5px;
-  padding: 20px;
-  cursor: pointer;
-  font-size: 1.5rem;
   background-color: #5E7557;
   color: #fff;
-  border: none;
-  border-radius: 10px;
-  transition: background-color 0.3s, transform 0.3s;
 }
 
 #submit-guess-button:hover,
@@ -52,7 +45,6 @@ h1, h2 {
 #toggle-layout-button:hover,
 #change-guesses-button:hover {
   background-color: #4A5E3A;
-  transform: scale(1.05);
 }
 
 #guess-field {
