@@ -35,15 +35,16 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    width: 100%;
+    width: auto;
+    margin: 0 auto;
 }
 
 .guess-row {
     display: flex;
     justify-content: center;
     gap: 5px;
-    width: 100%;
-    max-width: 500px;
+    width: auto;
+    max-width: 100%;
 
 }
 
