@@ -89,12 +89,12 @@ body {
     flex: 1 1 calc((100% - (9*4px) - 8vw) / 10);
   */
   flex: 1 1 0;
-  max-width: 90px;
   aspect-ratio: 1 / 1;
+  max-width: clamp(28px, 9vw, 90px);
   border-radius: 10px;
   cursor: pointer;
 
-  font-size: clamp(1rem, 4vw, 38px);
+  font-size: clamp(0.8rem, 3vw, 32px);
 
   display: flex;
   align-items: center;
