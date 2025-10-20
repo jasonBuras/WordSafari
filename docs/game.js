@@ -41,6 +41,7 @@ class WordGame{
         this.createQwertyKeyboard();
         this.addEventListeners();
         this.initGuessRows();
+        console.log(this.answer);
     }
 
     async loadWordLists(){
@@ -55,6 +56,7 @@ class WordGame{
 
             this.answer = this.possibleAnswers[Math.floor(Math.random() * this.possibleAnswers.length)];
             this.submitGuessButton.disabled = false;
+            
         } catch(err){
             console.error("Error loading word lists: ", err);
         }
@@ -200,7 +202,10 @@ class WordGame{
                     this.winStreak++;
                     //update the win streak display regardless of the count
                     if (this.winStreak >= 3) {
-                        document.getElementById('winstreak-display').innerHTML = `🔥 You're on a ${this.winStreak} word streak! 🔥`;
+                        document.getElementById('winstreak-display').innerHTML = 
+                            this.winStreak >= 3
+                                ? `🔥 You're on a ${this.winStreak} word streak! 🔥`
+                                : `Streak: ${this.winStreak}`;
                     }
                     confetti({
                         particleCount: 100,      //number of confetti particles
@@ -210,7 +215,6 @@ class WordGame{
                     setTimeout(() => {
                         this.playSound('win');
                         alert("Congrats! You guessed " + this.answer + "!");
-                        document.getElementById('winstreak-display').innerHTML = "";
                         this.resetGame();
                     }, 100); //slight delay before showing the alert
                 } else if (this.currentGuess >= this.maxGuesses) {
@@ -253,6 +257,7 @@ class WordGame{
         }
 
         this.answer = this.possibleAnswers[Math.floor(Math.random() * this.possibleAnswers.length)];
+        console.log(this.answer);
     }
 
 }
